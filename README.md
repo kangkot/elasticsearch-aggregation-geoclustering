@@ -8,7 +8,7 @@ In order to install the plugin, simply run: `bin/plugin -install opendatasoft/el
 
 |   Geoclustering aggregation Plugin  | elasticsearch     | Release date |
 |-------------------------------------|-------------------|:------------:|
-| 1.0.0                               | 1.2.2 -> master   |  2014-08-16  |
+| 1.0.0                               | 1.2.2 -> master   |  2014-07-16  |
 
 
 Usage
