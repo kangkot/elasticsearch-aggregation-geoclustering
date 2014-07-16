@@ -4,7 +4,6 @@ Elasticsearch Aggregation Geoclustering Plugin
 
 The geoclutering aggregation plugin adds the possibility to aggregate Geo Points in geographical clusters.
 
-In order to install the plugin, simply run: `bin/plugin -install opendatasoft/elasticsearch-aggregation-geoclustering/1.0.0`
 
 |   Geoclustering aggregation Plugin  | elasticsearch     | Release date |
 |-------------------------------------|-------------------|:------------:|
@@ -75,6 +74,12 @@ For example :
 
 }
 ```
+
+Installation
+------------
+
+bin/plugin --install geo_clustering --url:///absolute/path/to/geohash_clustering-1.0.0.zip
+
 
 License
 -------
