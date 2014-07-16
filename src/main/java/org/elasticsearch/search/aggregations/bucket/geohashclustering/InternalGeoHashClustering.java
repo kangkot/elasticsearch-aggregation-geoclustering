@@ -242,10 +242,6 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
                     continue;
                 }
 
-                if (neighborBucket.getKey().equals("u09tvqxx")){
-                    System.out.println("pouet");
-                }
-
                 if (shouldCluster(bucket, neighborBucket)) {
                     bucket.merge(neighborBucket, reduceContext.bigArrays());
                     for (long superClusterHash: bucket.geohashesList) {
