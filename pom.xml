@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>geohash_clustering</groupId>
-    <artifactId>geohash_clustering</artifactId>
+    <groupId>org.opendatasoft.elasticsearch</groupId>
+    <artifactId>elasticsearch-geoclustering-aggregation</artifactId>
     <version>1.0.0</version>
 
     <parent>
