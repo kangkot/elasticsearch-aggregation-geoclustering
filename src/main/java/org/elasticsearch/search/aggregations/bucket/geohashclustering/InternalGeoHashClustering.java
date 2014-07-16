@@ -278,13 +278,13 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
         String northEast = GeoHash.right(north);
         String east = GeoHash.right(geohash);
         String south = GeoHash.bottom(geohash);
-//        String west = GeoHash.left(geohash);
-//        String southWest = GeoHash.left(south);
-//        String southEast = GeoHash.right(south);
+        String west = GeoHash.left(geohash);
+        String southWest = GeoHash.left(south);
+        String southEast = GeoHash.right(south);
 
         return new String[] {
-           northWest, north, northEast, east
-//           northWest, north, northEast, west, east, southWest, south, southEast
+//           northWest, north, northEast, east
+           northWest, north, northEast, west, east, southWest, south, southEast
         };
     }
 
