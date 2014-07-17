@@ -1,9 +1,9 @@
-package org.elasticsearch.plugin.geohashclustering;
+package com.opendatasoft.elasticsearch.plugin.geohashclustering;
 
-import org.elasticsearch.search.aggregations.bucket.geohashclustering.GeoHashClusteringParser;
+import com.opendatasoft.elasticsearch.search.aggregations.bucket.geohashclustering.GeoHashClusteringParser;
 import org.elasticsearch.plugins.AbstractPlugin;
 import org.elasticsearch.search.aggregations.AggregationModule;
-import org.elasticsearch.search.aggregations.bucket.geohashclustering.InternalGeoHashClustering;
+import com.opendatasoft.elasticsearch.search.aggregations.bucket.geohashclustering.InternalGeoHashClustering;
 
 public class GeohashClusteringAggregationsPlugin extends AbstractPlugin {
     @Override

@@ -1,12 +1,9 @@
-package org.elasticsearch.search.aggregations.bucket.geohashclustering;
+package com.opendatasoft.elasticsearch.search.aggregations.bucket.geohashclustering;
 
 import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.common.geo.builders.PolygonBuilder;
-import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.Collection;
-import java.util.Comparator;
 
 /**
  * A {@code geohash_grid} aggregation. Defines multiple buckets, each representing a cell in a geo-grid of a specific

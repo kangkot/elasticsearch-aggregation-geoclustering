@@ -1,4 +1,4 @@
-package org.elasticsearch.search.aggregations.bucket.geohashclustering;
+package com.opendatasoft.elasticsearch.search.aggregations.bucket.geohashclustering;
 
 import org.elasticsearch.common.geo.GeoUtils;
 
