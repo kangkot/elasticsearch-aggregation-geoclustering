@@ -10,6 +10,12 @@ This is a bucket aggregation.
 |-------------------------------------|-------------------|:------------:|
 | 1.0.0                               | 1.2.2 -> master   |  2014-07-16  |
 
+Overview
+--------
+
+This plugin computes a geohash precision from a `zoom` and a `distance` (in pixel).
+It groups points (from `field` parameter) into buckets that represent geohash cells and computes each buckets center.
+Then it merges these cells if distance between two cluster centers is lower than `distance` parameter.
 
 Usage
 -----
