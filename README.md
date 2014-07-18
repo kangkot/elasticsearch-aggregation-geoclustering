@@ -8,6 +8,7 @@ This is a bucket aggregation.
 
 |   Geoclustering aggregation Plugin  | elasticsearch     | Release date |
 |-------------------------------------|-------------------|:------------:|
+| 1.0.1                               | 1.2.2 -> master   |  2014-07-18  |
 | 1.0.0                               | 1.2.2 -> master   |  2014-07-16  |
 
 Overview
@@ -85,7 +86,7 @@ For example :
 Installation
 ------------
 
-`bin/plugin --install geo_clustering_aggregation --url "https://github.com/opendatasoft/elasticsearch-aggregation-geoclustering/raw/master/dist/elasticsearch-geoclustering-aggregation-1.0.0.zip"`
+`bin/plugin --install geo_clustering_aggregation --url "https://github.com/opendatasoft/elasticsearch-aggregation-geoclustering/raw/master/dist/elasticsearch-geoclustering-aggregation-1.0.1.zip"`
 
 
 License

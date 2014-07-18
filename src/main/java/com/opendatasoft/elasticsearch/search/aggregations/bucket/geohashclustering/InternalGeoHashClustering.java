@@ -49,7 +49,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
         // geohash of first cluster (for ID purpose)
         protected long geohashAsLong;
         // List of aggregated geohash
-        protected List<Long> geohashesList;
+        protected Set<Long> geohashesList;
         protected long docCount;
         protected GeoPoint centroid;
         protected InternalAggregations aggregations;
@@ -58,7 +58,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             this.docCount = docCount;
             this.aggregations = aggregations;
             this.geohashAsLong = geohashAsLong;
-            this.geohashesList = new ArrayList<Long>();
+            this.geohashesList = new HashSet<Long>();
             this.centroid = centroid;
         }
 
@@ -314,7 +314,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             double centroidLat = in.readDouble();
             double centroidLon = in.readDouble();
             int nbGeohash = in.readInt();
-            List<Long> geohashList = new ArrayList<Long>(nbGeohash);
+            Set<Long> geohashList = new HashSet<Long>(nbGeohash);
             for (int j=0; j<nbGeohash;j++) {
                 geohashList.add(in.readLong());
             }
@@ -356,10 +356,9 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             builder.startObject();
             builder.field(CommonFields.KEY, bucket.getKeyAsText());
             builder.field(CommonFields.DOC_COUNT, bucket.getDocCount());
-            List<String> geohashGridsString = new ArrayList<String>(bucket.geohashesList.size());
+            Set<String> geohashGridsString = new HashSet<String>(bucket.geohashesList.size());
             for (long geohash: bucket.geohashesList) {
-                GeoPoint p = GeoHashUtils.decode(geohash);
-                geohashGridsString.add(GeoHashUtils.encode(p.getLat(),p.getLon(), bucket.getKey().length()));
+                geohashGridsString.add(GeoHashUtils.toString(geohash));
             }
             builder.array(new XContentBuilderString("geohash_grids"), geohashGridsString);
             builder.field(new XContentBuilderString("cluster_center"));
