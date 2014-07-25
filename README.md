@@ -86,7 +86,7 @@ For example :
 Installation
 ------------
 
-`bin/plugin --install geo_clustering_aggregation --url "https://github.com/opendatasoft/elasticsearch-aggregation-geoclustering/releases/download/V1.1.0/elasticsearch-geoclustering-aggregation-1.1.0.zip"`
+`bin/plugin --install geo_clustering_aggregation --url "https://github.com/opendatasoft/elasticsearch-aggregation-geoclustering/releases/download/v1.1.0/elasticsearch-geoclustering-aggregation-1.1.0.zip"`
 
 
 License
