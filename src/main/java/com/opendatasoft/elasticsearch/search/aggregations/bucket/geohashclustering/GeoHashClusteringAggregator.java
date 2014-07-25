@@ -133,7 +133,7 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
 
 
         List<InternalGeoHashClustering.Bucket> res = new ArrayList<InternalGeoHashClustering.Bucket>();
-        for (long i = 0; i < bucketOrds.size(); ++i) {
+        for (long i = 0; i < bucketOrds.size(); i++) {
             long clusterHash = bucketOrds.get(i);
 
             ClusterCollector coll = clusterCollectors.get(clusterHash);
