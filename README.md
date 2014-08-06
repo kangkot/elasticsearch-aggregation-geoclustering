@@ -2,7 +2,7 @@ Elasticsearch Aggregation Geoclustering Plugin
 ================================================
 
 
-The geoclutering aggregation plugin adds the possibility to aggregate Geo Points in geographical clusters.
+The geoclustering aggregation plugin adds the possibility to aggregate Geo Points in geographical clusters.
 
 This is a bucket aggregation.
 
