@@ -10,7 +10,6 @@ import org.elasticsearch.common.io.stream.StreamInput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.text.StringText;
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.common.util.BigArrays;
 import org.elasticsearch.common.util.LongObjectPagedHashMap;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
@@ -105,7 +104,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             return aggregations;
         }
 
-        public Bucket reduce(List<? extends Bucket> buckets, BigArrays bigArrays) {
+        public Bucket reduce(List<? extends Bucket> buckets, ReduceContext reduceContext) {
             List<InternalAggregations> aggregationsList = new ArrayList<InternalAggregations>(buckets.size());
             Bucket reduced = null;
             for (Bucket bucket : buckets) {
@@ -116,11 +115,11 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
                 }
                 aggregationsList.add(bucket.aggregations);
             }
-            reduced.aggregations = InternalAggregations.reduce(aggregationsList, bigArrays);
+            reduced.aggregations = InternalAggregations.reduce(aggregationsList, reduceContext);
             return reduced;
         }
 
-        public void merge(Bucket bucketToMergeIn,BigArrays bigArrays) {
+        public void merge(Bucket bucketToMergeIn, ReduceContext reduceContext) {
 
             long mergedDocCount = bucketToMergeIn.docCount + docCount;
             double newCentroidLat = (centroid.getLat() * docCount + bucketToMergeIn.centroid.getLat() * bucketToMergeIn.docCount) / mergedDocCount;
@@ -133,7 +132,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             aggregationsList.add(aggregations);
             aggregationsList.add(bucketToMergeIn.aggregations);
 
-            bucketToMergeIn.aggregations = InternalAggregations.reduce(aggregationsList, bigArrays);
+            bucketToMergeIn.aggregations = InternalAggregations.reduce(aggregationsList, reduceContext);
 
 
         }
@@ -213,7 +212,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
 
         for (LongObjectPagedHashMap.Cursor<List<Bucket>> cursor : buckets) {
             List<Bucket> sameCellBuckets = cursor.value;
-            Bucket bucket = sameCellBuckets.get(0).reduce(sameCellBuckets, reduceContext.bigArrays());
+            Bucket bucket = sameCellBuckets.get(0).reduce(sameCellBuckets, reduceContext);
             clusterMap.put(sameCellBuckets.get(0).geohashAsLong, bucket);
             bucketList.add(sameCellBuckets.get(0).geohashAsLong);
         }
@@ -243,7 +242,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
                 }
 
                 if (shouldCluster(bucket, neighborBucket)) {
-                    bucket.merge(neighborBucket, reduceContext.bigArrays());
+                    bucket.merge(neighborBucket, reduceContext);
                     for (long superClusterHash: bucket.geohashesList) {
                         clusterMap.put(superClusterHash, neighborBucket);
                     }
@@ -349,8 +348,7 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
     }
 
     @Override
-    public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
-        builder.startObject(name);
+    public XContentBuilder doXContentBody(XContentBuilder builder, Params params) throws IOException {
         builder.startArray(CommonFields.BUCKETS);
         for (Bucket bucket : buckets) {
             builder.startObject();
@@ -367,7 +365,6 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             builder.endObject();
         }
         builder.endArray();
-        builder.endObject();
         return builder;
     }
 
