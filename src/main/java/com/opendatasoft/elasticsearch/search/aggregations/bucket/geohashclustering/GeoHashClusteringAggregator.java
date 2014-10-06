@@ -28,7 +28,7 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
     private int distance;
 
     public static class ClusterCollector {
-        private List<GeoPoint> geoPoints;
+//        private List<GeoPoint> geoPoints;
         private double latMin;
         private double latMax;
         private double lonMin;
@@ -36,14 +36,14 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
 
 
         public ClusterCollector(GeoPoint geoPoint) {
-            geoPoints = new ArrayList<GeoPoint>();
-            geoPoints.add(geoPoint);
+//            geoPoints = new ArrayList<GeoPoint>();
+//            geoPoints.add(geoPoint);
             latMin = latMax = geoPoint.getLat();
             lonMin = lonMax = geoPoint.getLon();
         }
 
         public void addPoint(GeoPoint point) {
-            geoPoints.add(point);
+//            geoPoints.add(point);
             latMin = Math.min(point.getLat(), latMin);
             latMax = Math.max(point.getLat(), latMax);
             lonMin = Math.min(point.getLon(), lonMin);
@@ -92,10 +92,10 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
     public void collect(int doc, long owningBucketOrdinal) throws IOException {
         assert owningBucketOrdinal == 0;
 
-        final int valuesCount2 = geoValues.setDocument(doc);
+        final int valuesCount = geoValues.setDocument(doc);
 
 
-        for (int i = 0; i<valuesCount2; i++) {
+        for (int i = 0; i<valuesCount; i++) {
 
             final GeoPoint geoPoint = geoValues.nextValue();
             double meterByPixel = GeoClusterUtils.getMeterByPixel(zoom, geoPoint.getLat());
