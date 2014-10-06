@@ -7,7 +7,7 @@ import org.elasticsearch.common.geo.GeoUtils;
 import org.elasticsearch.common.lease.Releasables;
 import org.elasticsearch.common.util.LongHash;
 import org.elasticsearch.common.util.LongObjectPagedHashMap;
-import org.elasticsearch.index.fielddata.GeoPointValues;
+import org.elasticsearch.index.fielddata.MultiGeoPointValues;
 import org.elasticsearch.search.aggregations.*;
 import org.elasticsearch.search.aggregations.bucket.BucketsAggregator;
 import org.elasticsearch.search.aggregations.support.AggregationContext;
@@ -23,7 +23,7 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
     private final ValuesSource.GeoPoint valuesSource;
     private LongHash bucketOrds;
     private LongObjectPagedHashMap<ClusterCollector> clusterCollectors;
-    private GeoPointValues geoValues;
+    private MultiGeoPointValues geoValues;
     private int zoom;
     private int distance;
 
@@ -92,12 +92,13 @@ public class GeoHashClusteringAggregator extends BucketsAggregator {
     public void collect(int doc, long owningBucketOrdinal) throws IOException {
         assert owningBucketOrdinal == 0;
 
-        final int valuesCount = geoValues.setDocument(doc);
-
+        geoValues.setDocument(doc);
+        final int valuesCount = geoValues.count();
 
         for (int i = 0; i<valuesCount; i++) {
 
-            final GeoPoint geoPoint = geoValues.nextValue();
+            GeoPoint geoPoint = geoValues.valueAt(i);
+
             double meterByPixel = GeoClusterUtils.getMeterByPixel(zoom, geoPoint.getLat());
             int pointPrecision = GeoUtils.geoHashLevelsForPrecision(distance * meterByPixel);
             pointPrecision = pointPrecision > 1 ? pointPrecision - 1: pointPrecision ;
