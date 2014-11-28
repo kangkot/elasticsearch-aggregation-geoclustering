@@ -6,7 +6,7 @@
 
     <groupId>org.opendatasoft.elasticsearch</groupId>
     <artifactId>elasticsearch-geoclustering-aggregation</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <elasticsearch.version>1.4.0</elasticsearch.version>
+        <elasticsearch.version>1.4.1</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -36,11 +36,6 @@
             <artifactId>spatial4j</artifactId>
             <version>0.4.1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.davidmoten</groupId>
-            <artifactId>geo</artifactId>
-            <version>0.6.7</version>
         </dependency>
     </dependencies>
 

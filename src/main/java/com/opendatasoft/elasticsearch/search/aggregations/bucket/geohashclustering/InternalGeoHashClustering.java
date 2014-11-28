@@ -1,6 +1,5 @@
 package com.opendatasoft.elasticsearch.search.aggregations.bucket.geohashclustering;
 
-import com.github.davidmoten.geo.GeoHash;
 import com.spatial4j.core.distance.DistanceUtils;
 import org.elasticsearch.common.geo.GeoHashUtils;
 import org.elasticsearch.common.geo.GeoPoint;
@@ -225,7 +224,13 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
             Long bucketHash = iterBucket.next();
 
             Bucket bucket = clusterMap.get(bucketHash);
-            for (String neigh: getNeighbors(bucket.getKey())) {
+
+            Collection<? extends CharSequence> neighbors = GeoHashUtils.neighbors(bucket.getKey());
+
+            Iterator<? extends CharSequence> iterator = neighbors.iterator();
+
+            for (int i = 0; iterator.hasNext(); i++) {
+                String neigh = iterator.next().toString();
                 GeoPoint geoPointNeighbor = GeoHashUtils.decode(neigh);
                 Bucket neighborBucket = clusterMap.get(GeoHashUtils.encodeAsLong(geoPointNeighbor.getLat(), geoPointNeighbor.getLon(), neigh.length()));
                 if (neighborBucket == null) {
@@ -269,22 +274,6 @@ public class InternalGeoHashClustering extends InternalAggregation implements Ge
         // Add sorting
 
         return new InternalGeoHashClustering(getName(), res, distance, zoom);
-    }
-
-    public String[] getNeighbors(String geohash) {
-        String north = GeoHash.top(geohash);
-        String northWest = GeoHash.left(north);
-        String northEast = GeoHash.right(north);
-        String east = GeoHash.right(geohash);
-        String south = GeoHash.bottom(geohash);
-        String west = GeoHash.left(geohash);
-        String southWest = GeoHash.left(south);
-        String southEast = GeoHash.right(south);
-
-        return new String[] {
-//           northWest, north, northEast, east
-           northWest, north, northEast, west, east, southWest, south, southEast
-        };
     }
 
     public boolean shouldCluster(Bucket bucket, Bucket bucket2) {
